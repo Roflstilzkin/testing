@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/results.css">
+    <link rel="icon" href="/static/images/logo-small.png">
+    <title>homepage</title>
+
+</head>
+
+<!-- This is the ENTIRE homepage space -->
+<body>
+    <!-- [ HEAD BAR ] -->
+    <header class = "headbar">
+        <div id ="homepageButton">
+            <img src="/static/images/logo-small.png" alt="Logo-small" class="logo-small" > 
+        </div>
+
+        <div class = "title-banner">
+            <img src="/static/images/title-text.png" alt="title-text" class="title-text-image">
+        </div>
+
+        <button class="about-btn" id = "about-btn">About</button>
+    </header>
+
+    <!-- Script that handles the headbar buttons -->
+    <script type="text/javascript">
+        document.getElementById("homepageButton").onclick = function () {
+        
+            location.href = "{{ url_for('index') }}";
+        };
+        
+        document.getElementById("about-btn").onclick = function() {
+        
+            location.href ="/aboutpage"
+        };
+    </script> 
+
+
+   <!--  <h3> RESULTS</h3>
+
+    <p class="textInfo">Text:</p> <br> <br> <br> -->
+
+    <!-- [ MAIN BODY ] *below head bar*-->
+    <div class="container-results">
+          
+         
+          <p class="textInput">{{ text }}</p>
+        <!-- Footer of main dashboard
+        <footer class = "footer"> 
+            <img src="/static/images/logo-banner.png" alt="logo" width="15%" class = "logo-banner">
+        </footer>
+    -->
+    </div> <!-- End of MAIN BODY -->
+
+        <!-- start of analysis container-->
+        <div class="container-analysis">
+    
+            <div class="results-display-output">
+                <p class="results-title"> <strong> Results: </strong> </p>
+
+                <p><strong>Total Words:</strong> {{ totalwords.total }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "totalWords-details-input">
+                    <label for = "totalWords-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Word count is the most foundational process in natural language processing.
+                            First, the input text must be segmented: we do this by parsing all of the text
+                            into individual word tokens. Some examples from your text:
+                            <br>
+                            First token: {{ totalwords.firstword}}
+                            <br>
+                            Final token: {{ totalwords.lastword }}
+                            <br>
+                            The word tokens are added to a list, and counted individually for the answer: {{ totalwords.total }}
+                            <br><br>
+                            Confidence rating: VERY HIGH (>99%)
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Different Words:</strong> {{ differentwords.count }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "differentWords-details-input">
+                    <label for = "differentWords-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Unique word count changes can easily identify patterns of an increasing, or
+                            decreasing vocabulary. Similarly to total word count, the total uniqe word
+                            count is determined through tokenization and list counting.
+                            <br><br>
+                            Confidence rating: VERY HIGH (>99%)
+                            <br><br>
+                            Unique words: {{ differentwords.list | join(' ') }}
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Type Token:</strong> {{ typetoken.typetokenratio }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "typeToken-details-input">
+                    <label for = "typeToken-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Type token ratio is determined by dividing the unique word count, by the
+                            total word count. Thus, both the total word count and unique word count
+                            functions are utilized. Based on your text:<br>
+                            {{ typetoken.differentwords }}/{{ typetoken.totalwords }} = {{ typetoken.typetokenratio }}
+                            <br><br>
+                            Confidence rating: VERY HIGH (>99%)
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Morphemes:</strong> {{ morphemes }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "morphemes-details-input">
+                    <label for = "morphemes-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            To identify morphemes, one must break words down into smaller segments or
+                            syllables, to identify meaning in the segments. To accomplish such a task
+                            systematically, the text is tokenized and categorized based on tense, 
+                            plurality, roots, special cases, and more. Because of this, error cases
+                            in morpheme count is common, and should be used as a relative growth tool.
+                            <br><br>
+                            Confdence rating: HIGH (75% to 90%)
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "totalClauses-details-input">
+                    <label for = "totalClauses-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Subordinate Clauses:</strong> {{ totalsubordinate }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "subordinateClauses-details-input">
+                    <label for = "subordinateClauses-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Syntactic Subordination Index:</strong> {{ syntacticsubordination.index }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "syntacticSubordination-details-input">
+                    <label for = "syntacticSubordination-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Syntactic subordination index is determined by dividing the subordinate clauses, by the
+                            total number of clauses. Thus, both the subordinate clauses count and number of clauses count
+                            functions are utilized. Based on your text:<br>
+                            {{ syntacticsubordination.subordinateClauses }}/{{ syntacticsubordination.totalClauses }} = {{ syntacticsubordination.index }}
+                            <br><br>
+                            Confidence rating: x
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "verbErrors-details-input">
+                    <label for = "verbErrors-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Verb Errors / Number of Clauses:</strong> {{ verbclauses.verbClauses }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "verbClauses-details-input">
+                    <label for = "verbClauses-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Based on your text:<br>
+                            {{ verbclauses.verbErrors }}/{{ verbclauses.totalClauses }} = {{ verbclauses.verbClauses }}
+                            <br><br>
+                            Confidence rating: x
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- end of analysis container-->
+    </body>
+</html>
